@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Contact Us</title>
+  <link rel="stylesheet" type="text/css" href="css/style.css">
+</head>
+<body>
+  <h1>Song of Ice &amp; Fire Developer Directory</h1>
+  <div id="main">
+    <h3>Contact Us</h3>
+    <p>Please use this form to contact our team members</p>
+
+    <form action="process.php" method="post">
+      <p>  
+        <label id="labelname" for="name">Full Name: </label>
+        <input type="text" name="name"> 
+      </p>
+      <p>
+        <label id="labelemail" for="email">Email address: </label>
+        <input type="text" name="email">
+      </p>
+      <p>
+        <label id="labelphone" for="phone">Phone number: </label>
+        <input type="text" name="phone">
+      </p>
+      <p>
+        <label for="call">Best time to call </label>
+        <input type="radio" name="call" value="morning"> Morning
+        <input type="radio" name="call" value="midday" checked> Mid-day
+        <input type="radio" name="call" value="evening"> Evening
+      </p>
+      <p>
+        <label for="budget">Budget </label>
+        <select type="list" name="budget">
+          <option>--Select One--</option>
+          <option value="<100">under $100</option>
+          <option value="100-500">$100 - $500</option>
+          <option value="500-1000">$500 - $1000</option>
+          <option value=">1000">over $1000</option>
+          <option value="not-sure">not sure</option>
+        </select>
+      </p>
+      <p>
+        <label for="services">Services Needed: (Check all that apply)</label>
+        <table>
+          <tr>
+            <td><input type="checkbox" name="services" value="html"> HTML</td>
+            <td><input type="checkbox" name="services" value="javascript"> Javascript</td>  
+          </tr>
+          <tr>
+            <td><input type="checkbox" name="services" value=".net"> .NET</td>
+            <td><input type="checkbox" name="services" value="sql"> SQL</td> 
+          </tr>
+          <tr>
+            <td><input type="checkbox" name="services" value="ux-ui"> UX/UI</td>
+            <td><input type="checkbox" name="services" value="Design"> Design</td> 
+          </tr>
+          <tr>
+            <td>
+              <input type="checkbox" name="services" value="other"> other
+              <input type="text" name="other-desc" placeholder="please describe">
+            </td>
+          </tr>
+        </table>  
+      </p>
+      <p>
+        <input type="submit" name="submit" value="Submit Form">  
+      </p>
+    </form>    
+  </div><!--main div-->
+</body>
+</html>
