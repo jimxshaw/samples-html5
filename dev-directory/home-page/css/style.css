@@ -207,6 +207,14 @@ label {
   border-bottom: 1px dashed #000000;
 }
 
+footer {
+  text-align: center;
+  color: #ffffff;
+  background: #000000;
+  padding: 10px 0 10px 0;
+  margin: 20px;
+}
+
 
 
 
