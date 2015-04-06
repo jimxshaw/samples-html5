@@ -3,6 +3,42 @@
 <head>
   <title>Song of Ice &amp; Fire Developer Directory</title>
   <link rel="stylesheet" type="text/css" href="css/style.css">
+<script>
+  function initStorage() {
+    function saveName() {
+      var name = document.getElementById('name');
+      localStorage.setItem('name', name.value);
+    }
+
+    function saveEmail() {
+      var email = document.getElementById('email');
+      localStorage.setItem('email', email.value);
+    }
+
+    saveName();
+    saveEmail();
+  }
+
+  function displayName() {
+    if (localStorage.getItem('name') != null) {
+      document.write("Welcome back, " + localStorage.getItem('name') + "!");
+    }
+  }
+
+  function showText() {
+    if (localStorage.getItem('email') == null) {
+      document.write("<p>Please subscribe!</p>");
+    }
+    else {
+      document.write("<p><strong>Subscribed!</strong> " + localStorage.getItem('email') + "</p>");
+    }
+  }
+
+  function clearAll() {
+    localStorage.clear();
+    window.location.reload();
+  }
+</script>
 </head>
 <body>
     <div id="container">
@@ -19,22 +55,43 @@
             <li class="menuitem"><a href="register.html">Register as a Developer</a></li>
             <li class="menuitem"><a href="contact.html">Contact Us</a></li>
         </ul>
+        <div id="displayname">
+          <script>
+            displayName();
+          </script>
+        </div>
       </nav>
-
-      <nav id="leftmenu">
-        <h3>Links</h3>
-         <ul>
-              <li><a href="browse.html">SEO</a></li>
-              <li><a href="browse.html">Javascript</a></li>
-              <li><a href="browse.html">HTML</a></li>
-              <li><a href="browse.html">jQuery</a></li>
-              <li><a href="browse.html">Web design</a></li>
-              <li><a href="browse.html">Web Programming</a></li>
-              <li><a href="browse.html">Content Creation</a></li>
-              <li><a href="browse.html">Internet Marketing</a></li>
-              <li><a href="browse.html">CSS Templates</a></li>
-          </ul>
-      </nav>
+      <aside>
+        <nav id="leftmenu">
+          <h3>Links</h3>
+           <ul>
+                <li><a href="browse.html">SEO</a></li>
+                <li><a href="browse.html">Javascript</a></li>
+                <li><a href="browse.html">HTML</a></li>
+                <li><a href="browse.html">jQuery</a></li>
+                <li><a href="browse.html">Web design</a></li>
+                <li><a href="browse.html">Web Programming</a></li>
+                <li><a href="browse.html">Content Creation</a></li>
+                <li><a href="browse.html">Internet Marketing</a></li>
+                <li><a href="browse.html">CSS Templates</a></li>
+            </ul>
+            <br><br>
+            <div>
+              <h3 id="newsletter">Newsletter</h3>
+              <script>
+                showText();
+              </script>
+              <form id="news" onsubmit="initStorage()">
+                Name: 
+                <p><input type="text" id="name" name="name"></p>
+                Email:  
+                <p><input type="email" id="email" name="email"></p>
+                <input type="submit" value="Send">
+                <a href="#" onclick="clearAll()">Clear</a>
+              </form>
+            </div>
+        </nav>
+      </aside>
 
         <section id="content">
           <h2>Song of Ice &amp; Fire Developer Directory! </h2>
