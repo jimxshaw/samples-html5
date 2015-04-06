@@ -250,6 +250,15 @@ footer {
   float: left;
 }
 
+#info {
+  color: #ffffff;
+  text-decoration: underline;
+}
+
+.ipsum {
+  text-align: justify;
+}
+
 
 
 
