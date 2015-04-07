@@ -3,6 +3,43 @@ $(document).ready(function() {
     addTask(e);
   });
 
+  displayTasks();
+
+  // Function to display tasks
+
+  function displayTasks() {
+    var taskList = JSON.parse(localStorage.getItem('tasks'));
+
+    // Sort tasks
+    if (taskList != null) {
+      taskList = taskList.sort(sortByTime);
+    }
+
+    // Set counter
+    var i = 0;
+    // Check tasks
+    if (localStorage.getItem('tasks') != null) {
+      // Loop through and display
+      $.each(taskList, function(key, value) {
+        $('#task-table').append('<tr id="' + value.id + '">' + 
+                                '<td>' + value.task + '</td>' +
+                                '<td>' + value.task_priority + '</td>' +
+                                '<td>' + value.task_date + '</td>' +
+                                '<td>' + value.task_time + '</td>' +
+                                '<td><a href="edit.html?id=' + value.id + '">Edit</a> | <a href="#" id="remove-task">Remove</a></td>' +
+                                '</tr>');
+      })
+    }
+  }
+
+  // Function to sort tasks
+  function sortByTime(a, b) {
+    var aTime = a.task_time;
+    var bTime = b.task_time;
+
+    return ((aTime < bTime) ? -1 : ((aTime > bTime) ? 1 : 0));
+  }
+
   // Function to add a task
   function addTask(e) {
     // Add unique ID
