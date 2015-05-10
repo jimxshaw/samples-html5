@@ -2,13 +2,14 @@ $(document).ready(function() {
   // Define variables
   var canvas = $('#canvas')[0];
   var ctx = canvas.getContext('2d');
-  var w = canvas.width();
-  var h = canvas.height();
+  var w = canvas.width;
+  var h = canvas.height;
   var cw = 15;
   var d = "right";
   var food;
   var score;
   var speed = 130;
+  var color = "green";
 
   // Snake array
   var snake_array;
@@ -40,7 +41,7 @@ $(document).ready(function() {
   function create_food() {
     food = {
       x: Math.round(Math.random() * ((w - cw)/cw)),
-      y: Math.round(Math.random() * ((h - cw)/cw));
+      y: Math.round(Math.random() * ((h - cw)/cw))
     };
   }
 
@@ -75,7 +76,47 @@ $(document).ready(function() {
       return;
     }
 
-    if (nx == food.x && ny == food.y) {}
+    if (nx == food.x && ny == food.y) {
+      var tail = {x: nx, y: ny};
+      score++;
+
+      // Create new food
+      create_food();
+    }
+    else {
+      var tail = snake_array.pop();
+      tail.x = nx;
+      tail.y = ny;
+    }
+
+    snake_array.unshift(tail);
+
+    for (var i = 0; i < snake_array.length; i++) {
+      var c = snake_array[i];
+      paint_cell(c.x, c.y);
+    }
+
+    // Paint cell
+    paint_cell(food.x, food.y);
+
+    // Check score
+    checkScore(score);
+  }
+
+  function paint_cell(x, y) {
+    ctx.fillStyle = color;
+    ctx.fillRect(x * cw, y * cw, cw, cw);
+    ctx.strokeStyle = "white";
+    ctx.strokeRect(x * cw, y * cw, cw, cw);
+  }
+
+  function check_collision(x, y, array) {
+    for (var i = 0; i < array.length; i++) {
+      if (array[i.x] == x && array[i.y] == y) {
+        return true;
+      }
+    }
+    return false;
   }
 });
 
