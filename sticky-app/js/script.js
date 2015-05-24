@@ -1,7 +1,7 @@
 var db = null;
 
 if (window.openDatabase) {
-  db = openDatabase("NoteTest", "1.0", "Sticky App Database", 10000000);
+  db = openDatabase("NoteTest", "1.0", "MyStickys Database", 10000000);
   if (!db) {
     alert("Failed to open database");
   }
@@ -9,6 +9,10 @@ if (window.openDatabase) {
 else {
   alert("Failed to open database, make sure your browser supports HTML5 web storage");
 }
+
+var captured = null;
+var highestZ = 0;
+var highestId = 0;
 
 function Note() {
   var self = this;
@@ -111,6 +115,73 @@ Note.prototype = {
 
   set zIndex(x) {
     this.note.style.zIndex = x;
+  },
+
+  close: function(e) {
+    this.cancelPendingSave();
+    var note = this;
+    db.transaction(function(tx) {
+      tx.executeSql("DELETE FROM MyStickys WHERE id = ?", [note.id]);
+    });
+    document.body.removeChild(this.note);
+  },
+
+  saveSoon: function() {
+    this.cancelPandingSave();
+    var self = this;
+    this._saveTimer = setTimeout(function() {
+      self.save();
+    }, 200);
+  },
+
+  cancelPendingSave: function() {
+    if (!("_saveTimer" in this)) {
+      return;
+    }
+    clearTimeout(this._saveTimer);
+    delete this._saveTimer;
+  },
+
+  save: function() {
+    this.cancelPendingSave();
+    if ("dirty" in this) {
+      this.timestamp = new Date().getTime();
+      delete this.dirty;
+    }
+
+    var note = this;
+    db.transaction(function(tx) {
+      tx.executeSql("Update MyStickys SET note = ?, timestamp = ?, left = ?, top = ?, zIndex = ? WHERE id = ?", [note.text, note.timestamp, note.left, note.top, note.zIndex, note.id]);
+    });
+  },
+
+  saveAsNew = function() {
+    this.timestamp = new Date.getTime();
+
+    var note = this;
+    db.transaction(function(tx) {
+      tx.executeSql("INSERT INTO MyStickys (id, note, timestamp, left, top, zIndex) VALUES(?, ?, ?, ?, ?, ?)", [note.id, note.text, note.timestamp, note.left, note.top, note.zIndex]);
+    });
+  },
+
+  onMouseDown: function (e) {
+    capture = this;
+    this.startX = e.clientX - this.note.offsetLeft;
+    this.startY = e.clientY - this.note.offsetRight;
+    this.zIndex = ++highestZ;
+
+    var self = this;
+    if (!("mouseMoveHandler" in this)) {
+      this.mouseMoveHandler = function(e) {
+        return self.onMouseMove(e);
+      };
+      this.mouseUpHandler = function(e) {
+        return self.onMouseUp(e);
+      };
+    }
+
+    document.addEventListener("mousemove", this.mouseMoveHandler, true);
+    document.addEventListener("mouseup", this.mouseUpHandler, true);
   }  
 };
 
