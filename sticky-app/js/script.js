@@ -52,6 +52,67 @@ function Note() {
   return this;
 }
 
+Note.prototype = {
+  get id() {
+    if (!("_id" in this)) {
+      this._id = 0;
+    }
+    return this._id;
+  },
+
+  set id(x) {
+    this._id = x;
+  },
+
+  get text() {
+    return this.editField.innerHTML;
+  },
+
+  set text(x) {
+    this.editField.innerHTML = x;
+  },
+
+  get timestamp() {
+    if (!("_timestamp" in this)) {
+      this._timestamp = 0;
+    }
+    return this._timestamp;
+  },
+
+  set timestamp(x) {
+    if (this._timestamp == x) {
+      return;
+    }
+    this._timestamp = x;
+    var date = new Date();
+    date.setTime(parseFloat(x));
+    this.lastModified.textContent = modifiedString(date);
+  },
+
+  get left() {
+    return this.note.style.left;
+  },
+
+  set left(x) {
+    this.note.style.left = x;
+  },
+
+  get top() {
+    return this.note.style.top;
+  },
+
+  set top(x) {
+    this.note.style.top = x;
+  },
+
+  get zIndex() {
+    return this.note.style.zIndex;
+  },
+
+  set zIndex(x) {
+    this.note.style.zIndex = x;
+  }  
+};
 
 
 
