@@ -155,7 +155,7 @@ Note.prototype = {
     });
   },
 
-  saveAsNew = function() {
+  saveAsNew: function() {
     this.timestamp = new Date.getTime();
 
     var note = this;
@@ -182,7 +182,34 @@ Note.prototype = {
 
     document.addEventListener("mousemove", this.mouseMoveHandler, true);
     document.addEventListener("mouseup", this.mouseUpHandler, true);
-  }  
+  },
+
+  onMouseMove: function(e) {
+    if (this != captured) {
+      return true;
+    }
+    this.left = e.clientX - this.startX + 'px';
+    this.top = e.clientY - this.startY + 'px';
+    return false;
+  },
+
+  onMouseUp: function(e) {
+    document.removeEventListener("mousemove", this.mouseOverHandler, true);
+    document.removeEventListener("mouseup", this.mouseUpHandler, true);
+
+    this.save();
+    return false;
+  },
+
+  onNoteClick: function(e) {
+    this.editField.focus();
+    getSelection().collapseToEnd();
+  },
+
+  onKeyUp() {
+    this.dirty = true;
+    this.saveSoon();
+  }
 };
 
 
