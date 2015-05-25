@@ -34,9 +34,9 @@ function Note() {
   }, false);
   note.appendChild(close);
 
-  var edit = createElement('div');
+  var edit = document.createElement('div');
   edit.className = 'edit';
-  edit.setAttribute('contenteditable', false);
+  edit.setAttribute('contenteditable', true);
   edit.addEventListener('keyup', function() {
     return self.onKeyUp();
   }, false);
@@ -127,10 +127,10 @@ Note.prototype = {
   },
 
   saveSoon: function() {
-    this.cancelPandingSave();
+    this.cancelPendingSave();
     var self = this;
     this._saveTimer = setTimeout(function() {
-      self.save();
+      self.save()
     }, 200);
   },
 
@@ -156,7 +156,7 @@ Note.prototype = {
   },
 
   saveAsNew: function() {
-    this.timestamp = new Date.getTime();
+    this.timestamp = new Date().getTime();
 
     var note = this;
     db.transaction(function(tx) {
@@ -165,9 +165,9 @@ Note.prototype = {
   },
 
   onMouseDown: function (e) {
-    capture = this;
+    captured = this;
     this.startX = e.clientX - this.note.offsetLeft;
-    this.startY = e.clientY - this.note.offsetRight;
+    this.startY = e.clientY - this.note.offsetTop;
     this.zIndex = ++highestZ;
 
     var self = this;
@@ -182,6 +182,8 @@ Note.prototype = {
 
     document.addEventListener("mousemove", this.mouseMoveHandler, true);
     document.addEventListener("mouseup", this.mouseUpHandler, true);
+
+    return false;
   },
 
   onMouseMove: function(e) {
@@ -194,7 +196,7 @@ Note.prototype = {
   },
 
   onMouseUp: function(e) {
-    document.removeEventListener("mousemove", this.mouseOverHandler, true);
+    document.removeEventListener("mousemove", this.mouseMoveHandler, true);
     document.removeEventListener("mouseup", this.mouseUpHandler, true);
 
     this.save();
@@ -206,7 +208,7 @@ Note.prototype = {
     getSelection().collapseToEnd();
   },
 
-  onKeyUp() {
+  onKeyUp: function() {
     this.dirty = true;
     this.saveSoon();
   }
@@ -255,10 +257,21 @@ function loadNotes() {
 }
 
 function modifiedString(date) {
-  return "Sticky Last Modified: " + date.getFullYear() + " - " + (date.getMonth() + 1) + " - " + date.getHours() + ": " + date.getMinutes() + ": " + date.getSeconds();
+  return "Sticky Last Modified: " + date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate() + " " + date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
 }
 
+function newNote(){
+    var note = new Note();
+    note.id = ++highestId;
+    note.timestamp = new Date().getTime();
+    note.left = Math.round(Math.random() * 400) + 'px';
+    note.top = Math.round(Math.random() * 500) + 'px';
+    note.zIndex = ++highestZ;
+    note.saveAsNew();
+}
 
+if (db != null)
+    addEventListener('load', loaded, false);
 
 
 
