@@ -10,6 +10,7 @@ $(function() {
 
         uploadFinished: function(i, file, reponse) {
           $.data(file).addClass('done');
+          $('.uploaded').show();
         },
         error: function(err, file) {
           switch(err) {
@@ -41,7 +42,8 @@ $(function() {
       });
 
       var template = '<div class="preview">' + 
-                     '<span class="imageHolder">' + 
+                     '<span class="imageHolder">' +
+                     '<span class="uploaded"></span>' + 
                      '<img />' + 
                      '</span>' + 
                      '<div class="progressHolder">' +
