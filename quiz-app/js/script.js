@@ -80,7 +80,12 @@ $(document).ready(function() {
 // Process the answers
 function process(n) {
   // Get input value
+  var submitted  = $('input[name = q' + n + ']:checked').val();
+  if (submitted == sessionStorage.getItem('a' + n + '')) {
+      score = score + point;
+  }
 
+  /* Inefficient code
   if (q == "q1") {
     var submitted  = $('input[name = q1]:checked').val();
     if (submitted == sessionStorage.a1) {
@@ -108,14 +113,19 @@ function process(n) {
       score++;
     }
   }
+  */
 
-  if (q == "q5") {
-    var submitted  = $('input[name = q5]:checked').val();
-    if (submitted == sessionStorage.a5) {
-      score++;
+  if (n == total) {
+    $('#results').html('<h2>Your final score is: ' + score + ' out of ' + highest + '</h2><a href="index.html">Take Quiz Again</a>');
+    if (score == highest) {
+      $('#results').append('<h3><p>Perfect Score!</p></h3>');
     }
-
-    $('#results').html('<h3>Your final score is: ' + score + ' out of 5</h3><a href="index.html">Take Quiz Again</a>');
+    else if (score == highest - point || score == highest - point - point) {
+      $('#results').append('<h3><p>Good job!</p></h3>');
+    }
+    else {
+      $('#results').append('<h3><p>Improvement Needed</p></3>');
+    }
   }
   return false;
 }
