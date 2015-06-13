@@ -24,6 +24,22 @@ $(document).ready(function() {
   // Show first question
   $('#q1').show();
 
+  $('.questionForm #submit').click(function() {
+    // Get data attributes
+    current = $(this).parents('form:first').data('question');
+    next = $(this).parents('form:first').data('question') + 1;
+
+    // Hide all questions
+    $('.questionForm').hide();
+
+    // Show next question
+    $('#q' + next + '').fadeIn(300);
+
+    process('' + current + '');
+    return false;
+  });
+
+  /* Inefficient code
   $('#q1 #submit').click(function() {
     $('.questionForm').hide();
     process('q1');
@@ -58,10 +74,13 @@ $(document).ready(function() {
     $('#results').fadeIn(300);
     return false;
   });
+  */
 });
 
 // Process the answers
-function process(q) {
+function process(n) {
+  // Get input value
+
   if (q == "q1") {
     var submitted  = $('input[name = q1]:checked').val();
     if (submitted == sessionStorage.a1) {
