@@ -18,7 +18,33 @@
       <div id="audio-info">
         <span class="artist"></span> - <span class="title"></span>
       </div><!-- audio-info -->
-      <input id="volume" type="range">     
+      <input id="volume" type="range" min="0" max="10" value="4">
+      <br>
+      <div id="buttons">
+        <span>
+          <button id="prev"></button>
+          <button id="play"></button>
+          <button id="pause"></button>
+          <button id="stop"></button>
+          <button id="next"></button>
+        </span>
+      </div><!-- buttons -->
+      <div class="clearfix"></div><!-- clearfix -->
+      <div id="tracker">
+        <div id="progressBar">
+          <span id="progress"></span>
+        </div><!-- progressBar -->
+        <span id="duration"></span>
+      </div><!-- tracker -->
+      <div class="clearfix"></div><!-- clearfix -->
+      <ul id="playlist" class="hidden">
+          <li song="artist - firstSong.mp3" cover="cover_sample.jpg" artist="artist">firstSong.mp3</li>
+          <li song="artist - secondSong.mp3" cover="cover_sample.jpg" artist="artist">secondSong.mp3</li>
+          <li song="artist - thirdSong.mp3" cover="cover_sample.jpg" artist="artist">thirdSong.mp3</li>
+          <li song="artist - fourthSong.mp3" cover="cover_sample.jpg" artist="artist">fourthSong.mp3</li>
+          <li song="artist - fifthSong.mp3" cover="cover_sample.jpg" artist="artist">fifthSong.mp3</li>
+          <li song="artist - sixthSong.mp3" cover="cover_sample.jpg" artist="artist">sixthSong.mp3</li>
+      </ul>
     </div><!-- audio-player -->
   </div><!-- container -->
     
