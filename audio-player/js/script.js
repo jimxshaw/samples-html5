@@ -3,7 +3,7 @@ var audio;
 // Hide Pause button
 $('#pause').hide();
 
-initAudio('#playlist li:first-child');
+initAudio($('#playlist li:first-child'));
 
 function initAudio(element) {
   var song = element.attr('song');
