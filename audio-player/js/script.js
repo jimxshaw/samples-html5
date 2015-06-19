@@ -58,6 +58,16 @@ $('#prev').click(function() {
   showDuration();
 });
 
+// Playlist song click
+$('#playlist li').click(function() {
+  audio.pause();
+  initAudio($(this));
+  $('#play').hide();
+  $('#pause').show();
+  audio.play();
+  showDuration();
+});
+
 // Pause button hides and Play button shows
 // while the song is paused
 $('#pause').click(function() {
