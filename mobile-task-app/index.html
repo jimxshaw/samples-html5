@@ -15,7 +15,26 @@
 </head>
 <body>
 
+  <!-- Home page -->
+  <div data-role="page" id="home">
+    <header data-role="header">
+      <h1>Mobile Tasker</h1>
+    </header>
 
+    <main data-role="content" id="content">
+      <p><a href="#add" data-role="button">Add a Task</a></p>
+      <p><a href="index.html" id="clear_btn" data-role="button" data-theme="b">Clear All Tasks</a></p>
+      <ul id="todos" data-role="listview" data-filter="true" data-filter-placeholder="Search Tasks..." data-inset="true">
+          <li>do homework</li>
+          <li>study for test</li>
+          <li>finish program 6</li>
+      </ul>
+    </main>
+
+    <footer data-role="footer" id="footer">
+      <h4>Mobile Tasker &copy; 2015</h4>  
+    </footer>
+  </div><!-- home -->
     
 </body>
 </html>
