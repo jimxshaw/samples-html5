@@ -8,11 +8,16 @@ $(document).ready(function(){
   if (localStorage.getItem('todos') != null) {
     // Loop through and output li items
     $.each(todoList, function(key, value) {
-      $('#todos').prepend('<li id="task-' + i + '">' + value.todo_name + '</li>');
+      $('#todos').prepend('<li id="task-' + i + '"><a id="todo_link" href="#edit" data-todo_name=' + value.todo_name + ' data-todo_date="' + value.todo_date + '" ">' + value.todo_name + '</a></li>');
       i++;
     });
     // Refresh
     $('#todos').listview('refresh');
+
+    // Reload home page
+    $(document).on('pageshow', '#home', function() {
+      window.location.reload();
+    });
   }
 
   //Add task
@@ -24,9 +29,11 @@ $(document).ready(function(){
     //Simple field validation
     if(todo_name == ''){
       alert('Please give the todo a name');
-    } else if(todo_date == ''){
+    } 
+    else if(todo_date == ''){
       alert('Please add a date');
-    } else {
+    } 
+    else {
       var todos = JSON.parse(localStorage.getItem('todos'));
       //Check tasks
       if(todos == null){
