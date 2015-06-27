@@ -48,4 +48,10 @@ $(document).ready(function(){
       localStorage.setItem('todos',JSON.stringify(todos));
     }
   });
+
+  //Clear all tasks
+  $('#clear_btn').click(function() {
+    localStorage.clear();
+    window.location.reload();
+  });
 });
