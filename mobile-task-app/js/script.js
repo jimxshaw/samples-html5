@@ -1,4 +1,20 @@
+// Set task list variable
+var todoList = JSON.parse(localStorage.getItem('todos'));
+
 $(document).ready(function(){
+  // Set counter
+  var i = 0;
+  // Check for tasks
+  if (localStorage.getItem('todos') != null) {
+    // Loop through and output li items
+    $.each(todoList, function(key, value) {
+      $('#todos').prepend('<li id="task-' + i + '">' + value.todo_name + '</li>');
+      i++;
+    });
+    // Refresh
+    $('#todos').listview('refresh');
+  }
+
   //Add task
   $('#add_form').submit(function(){
     //Get submitted values
