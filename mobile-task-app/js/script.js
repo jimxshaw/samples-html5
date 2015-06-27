@@ -12,7 +12,7 @@ $(document).ready(function(){
       i++;
     });
     // Refresh
-    $('#todos').listview('refresh');
+    $('#todos').listview().listview('refresh');
 
     // Reload home page
     $(document).on('pageshow', '#home', function() {
@@ -52,6 +52,5 @@ $(document).ready(function(){
   //Clear all tasks
   $('#clear_btn').click(function() {
     localStorage.clear();
-    window.location.reload();
   });
 });
