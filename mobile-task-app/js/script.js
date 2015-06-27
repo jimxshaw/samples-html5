@@ -8,20 +8,23 @@ $(document).ready(function(){
   if (localStorage.getItem('todos') != null) {
     // Loop through and output li items
     $.each(todoList, function(key, value) {
-      $('#todos').prepend('<li id="task-' + i + '"><a id="todo_link" href="#edit" data-todo_name=' + value.todo_name + ' data-todo_date="' + value.todo_date + '" ">' + value.todo_name + '</a></li>');
+      $('#todos').prepend('<li id="task-' + i + 
+        '"><a id="todo_link" href="#edit" data-todo_name=' + value.todo_name + 
+        ' data-todo_date="' + value.todo_date + '" ">' + value.todo_name + 
+        '<span> ' + value.todo_date + '</span></a></li>');
       i++;
     });
     // Refresh
     $('#todos').listview().listview('refresh');
   }
 
-  //Add task
+  // Add task
   $('#add_form').submit(function(){
     //Get submitted values
     var todo_name = $('#todo_name').val();
     var todo_date = $('#todo_date').val();
     
-    //Simple field validation
+    // Simple field validation
     if(todo_name == ''){
       alert('Please give the todo a name');
     } 
@@ -30,11 +33,11 @@ $(document).ready(function(){
     } 
     else {
       var todos = JSON.parse(localStorage.getItem('todos'));
-      //Check tasks
+      // Check tasks
       if(todos == null){
         todos = [];
       }
-      //Create array with new task
+      // Create array with new task
       var new_todo = {
         "todo_name": todo_name,
         "todo_date": todo_date
@@ -44,7 +47,32 @@ $(document).ready(function(){
     }
   });
 
-  //Delete a task
+  // Edit a task
+  $('#edit_form').submit(function() {
+    currentTodoName = localStorage.getItem('currentTodoName');
+    currentTodoDate = localStorage.getItem('currentTodoDate');
+    // Loop through tasks & delete the selected task
+    for (var i = 0; i < todoList.length; i++) {
+      if (todoList[i].todo_name == currentTodoName) {
+        todoList.splice(i, 1);
+      }
+      localStorage.setItem('todos', JSON.stringify(todoList));
+    }
+    // Create a new task
+    var todo_name_edit = $('#todo_name_edit').val();
+    var todo_date_edit = $('#todo_date_edit').val();
+    var todos = JSON.parse(localStorage.getItem('todos'));
+    // Create array with new values
+    var update_todo = {
+      "todo_name": todo_name_edit,
+      "todo_date": todo_date_edit
+    };
+
+    todos.push(update_todo);
+    localStorage.setItem('todos',JSON.stringify(todos));
+  });
+
+  // Delete a task
   $('#edit_form').on('click', '#delete', function() {
     currentTodoName = localStorage.getItem('currentTodoName');
     currentTodoDate = localStorage.getItem('currentTodoDate');
@@ -64,11 +92,12 @@ $(document).ready(function(){
     localStorage.setItem('currentTodoDate', $(this).data('todo_date'));
   });
 
+  // Insert current data into edit form
   $(document).on('pageshow', '#edit', function() {
     currentTodoName = localStorage.getItem('currentTodoName');
     currentTodoDate = localStorage.getItem('currentTodoDate');
-    $('#edit_form input[name=todo_name]', this).val(currentTodoName);
-    $('#edit_form input[name=todo_date]', this).val(currentTodoDate);
+    $('#edit_form input[name=todo_name_edit]', this).val(currentTodoName);
+    $('#edit_form input[name=todo_date_edit]', this).val(currentTodoDate);
   });
 
   // Refesh the home page
@@ -76,7 +105,7 @@ $(document).ready(function(){
     window.location.reload();
   });
 
-  //Clear all tasks
+  // Clear all tasks
   $('#clear_btn').click(function() {
     localStorage.clear();
   });
