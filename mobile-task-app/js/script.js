@@ -49,6 +49,18 @@ $(document).ready(function(){
     }
   });
 
+  $('#todos').on('click', '#todo_link', function() {
+    localStorage.setItem('currentTodoName', $(this).data('todo_name'));
+    localStorage.setItem('currentTodoDate', $(this).data('todo_date'));
+  });
+
+  $(document).on('pageshow', '#edit', function() {
+    currentTodoName = localStorage.getItem('currentTodoName');
+    currentTodoDate = localStorage.getItem('currentTodoDate');
+    $('#edit_form input[name=todo_name]', this).val(currentTodoName);
+    $('#edit_form input[name=todo_date]', this).val(currentTodoDate);
+  });
+
   //Clear all tasks
   $('#clear_btn').click(function() {
     localStorage.clear();
