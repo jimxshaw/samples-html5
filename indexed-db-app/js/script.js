@@ -1,6 +1,6 @@
 $(document).ready(function() {
   // Open database
-  var request = indexedDB.open('customermanager', 1);
+  var request = window.indexedDB.open('customermanager', 1);
 
   request.onupgradeneeded = function(e) {
     var db = e.target.result;
@@ -31,7 +31,7 @@ function addCustomer() {
   var name = $('#name').val();
   var email = $('#email').val();
 
-  var transaction = db.transaction(["customer"], "readwrite");
+  var transaction = db.transaction(["customers"], "readwrite");
 
   // Ask for ObjectStore
   var store = transaction.objectStore("customers");
@@ -59,7 +59,7 @@ function addCustomer() {
 
 // Display customers
 function showCustomers(e) {
-  var transaction = db.transaction(["customer"], "readonly");
+  var transaction = db.transaction(["customers"], "readonly");
 
   // Ask for ObjectStore
   var store = transaction.objectStore("customers");
@@ -69,16 +69,43 @@ function showCustomers(e) {
   index.openCursor().onsuccess = function(e) {
     var cursor = e.target.result;
     if (cursor) {
-      output += "<tr>";
+      output += "<tr id='customer_" + cursor.value.id + "'>";
       output += "<td>" + cursor.value.id + "</td>";
       output += "<td><span>" + cursor.value.name + "</span></td>";
       output += "<td><span>" + cursor.value.email + "</span></td>";
-      output += "<td><a href='#'>Delete</a></td>";
+      output += "<td><a onclick='removeCustomer(" + cursor.value.id + ")' href='#'>Delete</a></td>";
       output += "</tr>";
       cursor.continue();
     }
     $('#customers').html(output);
   };
+}
+
+// Delete a customer
+function removeCustomer(id) {
+  var transaction = db.transaction(["customers"], "readwrite");
+
+  // Ask for ObjectStore
+  var store = transaction.objectStore("customers");
+
+  var request = store.delete(id);
+
+  // Success
+  request.onsuccess = function() {
+    console.log('customer ' + id + ' deleted');
+    $('.customer_' + id).remove();
+  };
+
+  // Error
+  request.onerror = function(e) {
+    console.log('Error: Could not open database...');
+  };
+}
+
+// Clear ALL customers
+function clearCustomers() {
+  indexedDB.deleteDatabase('customermanager');
+  window.location.href = "index.html";
 }
 
 
