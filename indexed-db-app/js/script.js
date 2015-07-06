@@ -71,8 +71,8 @@ function showCustomers(e) {
     if (cursor) {
       output += "<tr id='customer_" + cursor.value.id + "'>";
       output += "<td>" + cursor.value.id + "</td>";
-      output += "<td><span class='cursor customer' contenteditable='true'>" + cursor.value.name + "</span></td>";
-      output += "<td><span class='cursor customer' contenteditable='true'>" + cursor.value.email + "</span></td>";
+      output += "<td><span class='cursor customer' contenteditable='true' data-field='name' data-id='" + cursor.value.id + "'>" + cursor.value.name + "</span></td>";
+      output += "<td><span class='cursor customer' contenteditable='true' data-field='email' data-id='" + cursor.value.id + "'>" + cursor.value.email + "</span></td>";
       output += "<td><a onclick='removeCustomer(" + cursor.value.id + ")' href='#'>Delete</a></td>";
       output += "</tr>";
       cursor.continue();
@@ -107,6 +107,47 @@ function clearCustomers() {
   indexedDB.deleteDatabase('customermanager');
   window.location.href = "index.html";
 }
+
+// Update customers
+$('#customers').on('blur', '.customer', function() {
+  // Newly entered text
+  var newText = $(this).html();
+
+  // Field
+  var field =  $(this).data('field');
+
+  // Customer ID
+  var id = $(this).data('id');
+
+  // Get transaction
+  var transaction = db.transaction(["customers"], "readwrite");
+
+  // Ask for ObjectStore
+  var store = transaction.objectStore("customers");
+
+  var request = store.get(id);
+
+  request.onsuccess = function() {
+    var data = request.result;
+    if (field == 'name') {
+      data.name = newText;
+    }
+    else if (field == 'email') {
+      data.email = newText;
+    }
+
+    // Store updated text
+    var requestUpdate = store.put(data);
+
+    requestUpdate.onsuccess = function() {
+      console.log('Customer field updated');
+    };
+
+    requestUpdate.onerror = function() {
+      console.log('Error: Customer field NOT updated');
+    };
+  };
+});
 
 
 
