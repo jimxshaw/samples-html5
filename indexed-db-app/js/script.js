@@ -71,8 +71,8 @@ function showCustomers(e) {
     if (cursor) {
       output += "<tr id='customer_" + cursor.value.id + "'>";
       output += "<td>" + cursor.value.id + "</td>";
-      output += "<td><span>" + cursor.value.name + "</span></td>";
-      output += "<td><span>" + cursor.value.email + "</span></td>";
+      output += "<td><span class='cursor customer' contenteditable='true'>" + cursor.value.name + "</span></td>";
+      output += "<td><span class='cursor customer' contenteditable='true'>" + cursor.value.email + "</span></td>";
       output += "<td><a onclick='removeCustomer(" + cursor.value.id + ")' href='#'>Delete</a></td>";
       output += "</tr>";
       cursor.continue();
