@@ -6,7 +6,40 @@
 </head>
 <body>
 
-  
+  <div id="container">
+    <header>
+      <h1>Distance Meter</h1>
+    </header>
+
+    <p>
+      <strong>Starting Position</strong>
+      <br>
+      <span id="startLat">Finding Latitude...</span>,
+      <span id="startLon">Finding Longitude...</span>
+    </p>
+
+    <p>
+      <strong>Current Position</strong>
+      <br>
+      <span id="currentLat">Finding Latitude...</span>,
+      <span id="currentLon">Finding Longitude...</span>
+    </p>
+
+    <p>
+      <strong>Distance Gone</strong>
+      <br>
+      <span id="distance">0</span> Kilometers
+    </p>
+
+    <p>
+      <button id="startBtn" onclick="startTracking()">Start Tracking</button>
+      <button id="stopBtn" onclick="stopTracking()">Stop Tracking</button>
+    </p>
+
+    <footer>
+      <span>Copyright &copy; 2015, Distance Meter</span>
+    </footer>
+  </div>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
 <script src="js/script.js"></script>
