@@ -9,7 +9,7 @@ button {
   padding: 3px 13px;
 }
 
-button #stopBtn {
+button#stopBtn {
   display: none;
 }
 
